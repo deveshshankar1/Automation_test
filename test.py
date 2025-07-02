@@ -14,12 +14,39 @@ from webdriver_manager.chrome import ChromeDriverManager
 import argparse
 parser = argparse.ArgumentParser()
 
-email = input("Enter email: ")
+email = input("Enter email for creating account: ")
 password = input("Enter password: ")
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
 driver.get("https://magento.softwaretestingboard.com/")
+
+#creating account
+
+create_acc_button = driver.find_element(By.XPATH, "/html/body/div[2]/header/div[1]/div/ul/li[3]/a")
+create_acc_button.click()
+
+time.sleep(5)
+
+driver.find_element(By.XPATH, '//*[@id="firstname"]').send_keys("Dev")
+driver.find_element(By.XPATH, '//*[@id="lastname"]').send_keys("Sharma")
+driver.find_element(By.XPATH, '//*[@id="email_address"]').send_keys(email)
+driver.find_element(By.XPATH, '//*[@id="password"]').send_keys(password)
+driver.find_element(By.XPATH, '//*[@id="password-confirmation"]').send_keys(password)
+driver.find_element(By.XPATH, '//*[@id="form-validate"]/div/div[1]/button').click() #create account
+
+time.sleep(10)
+
+#sign out
+
+driver.find_element(By.XPATH, '/html/body/div[2]/header/div[1]/div/ul/li[2]/span/button').click()
+
+driver.find_element(By.XPATH, '/html/body/div[2]/header/div[1]/div/ul/li[2]/div/ul/li[3]/a').click()
+
+time.sleep(10)
+
+#sign in
+
 
 sign_in_button = driver.find_element(By.XPATH, "/html/body/div[2]/header/div[1]/div/ul/li[2]/a")
 sign_in_button.click()
